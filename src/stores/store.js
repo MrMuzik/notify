@@ -8,18 +8,26 @@ Vue.use(Vuex);
 export const store = new Vuex.Store({
   state: {
     active: false,
-    message: "std store message"
+    message: "",
+    queue: [],
+    timeout: 3000
   },
   mutations: {
     // Can only pass a single payload - object needed for multiple values
-    notify(state, payload) {
+    notify(state) {
       state.active = true;
-      state.message = payload.msg;
-      if (payload.timeout) {
-        setTimeout(() => {
-          state.active = false;
-        }, payload.timeout);
-      }
+      state.message = state.queue[0].msg;
+      state.timeout = state.queue[0].timeout ? state.queue[0].timeout : state.timeout;
+
+      setTimeout(() => {
+        state.active = false;
+      }, state.timeout);
+    },
+    addToQueue(state, payload) {
+      state.queue.push(payload);
+    },
+    removeFromQueue(state) {
+      state.queue.shift();
     }
   }
 });

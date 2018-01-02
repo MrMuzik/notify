@@ -8,6 +8,7 @@
   padding: 15px;
   background-color: #aaa;
   color: #222;
+  // Keep this in sync with timeout
   transition: right 0.5s ease;
 
   * {
@@ -19,6 +20,9 @@
     right: 20px;
   }
 }
+.display-none {
+  display: none !important;
+}
 </style>
 
 <template>
@@ -28,7 +32,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapMutations } from "vuex";
 
 export default {
   name: "notify",
@@ -37,11 +41,33 @@ export default {
   },
   computed: {
     // Allows state to be mounted as computed properties
-    ...mapState(["active", "message"])
+    ...mapState(["active", "queue", "message"]),
+    visible: function() {
+      // Get this watchable
+      let rect = this.$el.getBoundingClientRect();
+      //return rect.x < window.innerWidth;
+      return rect.x;
+    }
   },
   mounted() {
-    console.log(this.$store);
+    //console.log(this.$store);
   },
-  methods: {}
+  watch: {
+    active: function() {
+      if (!this.active && this.queue.length) {
+        this.removeFromQueue();
+      }
+    },
+    queue: function() {
+      if (!this.active && this.queue.length) {
+        setTimeout(() => {
+          this.notify();
+        }, 500);
+      }
+    }
+  },
+  methods: {
+    ...mapMutations(["notify", "removeFromQueue"])
+  }
 };
 </script>
