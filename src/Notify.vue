@@ -33,9 +33,7 @@ import { mapState } from "vuex";
 export default {
   name: "notify",
   data() {
-    return {
-
-    };
+    return {};
   },
   computed: {
     // Allows state to be mounted as computed properties

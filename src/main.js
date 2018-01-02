@@ -1,19 +1,19 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-import { store } from './stores/store.js'
-import App from './App.vue'
-import Notify from './Notify.vue'
+import Vue from "vue";
+import Vuex from "vuex";
+import { store } from "./stores/store.js";
+import App from "./App.vue";
+import Notify from "./Notify.vue";
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 new Vue({
   store,
-  el: '#app',
+  el: "#app",
   render: h => h(App)
-})
+});
 
 new Vue({
   store,
-  el: '#notify',
+  el: "#notify",
   render: h => h(Notify)
-})
+});
