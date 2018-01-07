@@ -34,7 +34,7 @@ a {
     <h1>{{ msg }}</h1>
     <button class="notifyMe" @click.prevent="addToQueue({msg:'hey yo', timeout: 5000})">hey yo</button>
     <button class="notifyMe" @click.prevent="addToQueue({msg:'somemo', timeout: 1000})">somemo</button>
-    <button class="notifyMe" @click.prevent="addToQueue({msg:'you no'})">you no</button>
+    <button class="notifyMe" @click.prevent="addToQueue({msg:'you no', autoDismiss: false})">you no</button>
   </div>
 </template>
 
