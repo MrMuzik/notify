@@ -67,7 +67,7 @@
   <div class="notify" v-if="active" :style="topPos" @click="updateActive(false)">
       <div class="name">Notification name</div>
       <p>{{message}}</p>
-      <div class="timeout">Disappears in 3 seconds</div>
+      <div class="timeout" v-if="autoDismiss">Disappears in {{ timeout/1000 }} seconds</div>
   </div>
 </transition>
 </template>
@@ -84,7 +84,7 @@ export default {
   },
   computed: {
     // Allows state to be mounted as computed properties
-    ...mapState(["active", "queue", "message", "autoDismiss"]),
+    ...mapState(["active", "queue", "message", "autoDismiss", "timeout"]),
     topPos: function() {
       // Set to display at top of user's view
       return `top:${this.top}px`;
