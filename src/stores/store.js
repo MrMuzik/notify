@@ -9,6 +9,7 @@ export const store = new Vuex.Store({
   state: {
     active: false,
     message: "",
+    title: "",
     queue: [],
     timeout: 3000,
     autoDismiss: true
@@ -17,9 +18,17 @@ export const store = new Vuex.Store({
     // Can only pass a single payload - object needed for multiple values
     notify(state) {
       state.active = true;
-      state.autoDismiss = state.queue[0].autoDismiss === false ? state.queue[0].autoDismiss : true;
+      state.autoDismiss =
+        state.queue[0].autoDismiss === false
+          ? state.queue[0].autoDismiss
+          : true;
       state.message = state.queue[0].msg;
-      state.timeout = state.queue[0].timeout ? state.queue[0].timeout : state.timeout;
+      state.title = state.queue[0].title
+        ? state.queue[0].title
+        : "Notification";
+      state.timeout = state.queue[0].timeout
+        ? state.queue[0].timeout
+        : state.timeout;
 
       if (state.autoDismiss) {
         setTimeout(() => {
@@ -34,7 +43,7 @@ export const store = new Vuex.Store({
       state.queue.shift();
     },
     updateActive(state, payload) {
-      state.active = payload
+      state.active = payload;
     }
   }
 });

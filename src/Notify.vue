@@ -65,7 +65,7 @@
 <template>
 <transition name="slide-fade">
   <div class="notify" v-if="active" :style="topPos" @click="updateActive(false)">
-      <div class="name">Notification name</div>
+      <div class="name">{{title}}</div>
       <p>{{message}}</p>
       <div class="timeout" v-if="autoDismiss">Disappears in {{ this.count/1000 }} seconds</div>
   </div>
@@ -85,7 +85,14 @@ export default {
   },
   computed: {
     // Allows state to be mounted as computed properties
-    ...mapState(["active", "queue", "message", "autoDismiss", "timeout"]),
+    ...mapState([
+      "active",
+      "queue",
+      "message",
+      "title",
+      "autoDismiss",
+      "timeout"
+    ]),
     topPos: function() {
       // Set to display at top of user's view
       return `top:${this.top}px`;
