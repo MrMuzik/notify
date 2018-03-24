@@ -67,7 +67,7 @@
   <div class="notify" v-if="active" :style="topPos" @click="updateActive(false)">
       <div class="name">Notification name</div>
       <p>{{message}}</p>
-      <div class="timeout" v-if="autoDismiss">Disappears in {{ timeout/1000 }} seconds</div>
+      <div class="timeout" v-if="autoDismiss">Disappears in {{ this.count/1000 }} seconds</div>
   </div>
 </transition>
 </template>
@@ -79,7 +79,8 @@ export default {
   name: "notify",
   data() {
     return {
-      top: 0
+      top: 0,
+      count: 0
     };
   },
   computed: {
@@ -96,6 +97,11 @@ export default {
   updated() {},
   watch: {
     active: function() {
+      if (this.active) {
+        this.count = this.timeout;
+        this.counter = setInterval(this.timer, 1000);
+      }
+
       if (!this.active && this.queue.length) {
         this.removeFromQueue();
       }
@@ -109,7 +115,15 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(["notify", "removeFromQueue", "updateActive"])
+    ...mapMutations(["notify", "removeFromQueue", "updateActive"]),
+    timer() {
+      this.count = this.count - 1000;
+      if (this.count <= 0) {
+        clearInterval(this.counter);
+        //counter ended, do something here
+        this.count = 0;
+      }
+    }
   }
 };
 </script>
